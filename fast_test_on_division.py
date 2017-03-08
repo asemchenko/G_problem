@@ -1,3 +1,4 @@
+# недописано
 def find_koef(number):
     koef = [1]
     for i in range(1,number+1):
