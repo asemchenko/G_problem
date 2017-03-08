@@ -131,7 +131,6 @@ while True:
 		print()
 		digits_array.reverse()
 '''
-'''
 
 while True:
 	N = int(input("Input N: "))
@@ -145,4 +144,4 @@ while True:
 	while start <= stop :
 		print("number: %3d , result: %d"%(start,find_result(start)))
 		start+=2
-
+'''
