@@ -1,0 +1,40 @@
+number:  50, result: 9999950
+number:  51, result: 889899
+number:  52, result: 1989988
+number:  53, result: 2989889
+number:  54, result: 1999998
+number:  55, result: 60989995
+number:  56, result: 7979888
+number:  57, result: 5899899
+number:  58, result: 8988898
+number:  59, result: 8888999
+number:  60, result: 79999980
+number:  61, result: 9998998
+number:  62, result: 19999898
+number:  63, result: 19899999
+number:  64, result: 59989888
+number:  65, result: 69999995
+number:  66, result: 67999998
+number:  67, result: 58999999
+number:  68, result: 99899888
+number:  69, result: 79899999
+number:  70, result: 898999990
+number:  71, result: 289999997
+number:  72, result: 399999888
+number:  73, result: 499988899
+number:  74, result: 2739999998
+number:  75, result: 999999975
+number:  76, result: 889998988
+number:  77, result: 899897999
+number:  78, result: 898999998
+number:  79, result: 999899998
+number:  80, result: 29999998880
+number:  81, result: 999999999
+number:  82, result: 4989899998
+number:  83, result: 5989989899
+number:  84, result: 6899999988
+number:  85, result: 9999998995
+
+Похоже начиная с числа 33 в записи каждого такого числа есть 9
+Похоже начиная с числа 17 в записи каждого такого числа есть 8 или 9
+
