@@ -28,28 +28,25 @@ def find_element_in_array(element,array):
 		if array[i] == element:
 			return i
 	return -1
-def find_next_number(number_array):
-	need_sum_digits = sum_digits(number_array)
+def find_next_number(number_array,need_sum_digits):
 	current_sd = -1
-	#if need_sum_digits & 1 == 0:
-	if True:
-		while current_sd != need_sum_digits:
-			element_less_than_nine_ind = find_less_element(number_array,9)
-			if element_less_than_nine_ind < 0:
-				number_array.append(0)
-			element_less_than_nine_ind = find_less_element(number_array,9)
-			write_number(0,find_less_element(number_array,9),number_array,0)
-			number_array[element_less_than_nine_ind] += 1
-			current_sd = sum_digits(number_array)
-			if current_sd == need_sum_digits:
-				break
-			delta = need_sum_digits - current_sd
-			if delta < 0 :
-				continue
-			count_nine = int(delta/9)
-			write_number(0,count_nine,number_array,9)
-			number_array[count_nine] = delta%9
-			current_sd = sum_digits(number_array)
+	while current_sd != need_sum_digits:
+		element_less_than_nine_ind = find_less_element(number_array,9)
+		if element_less_than_nine_ind < 0:
+			number_array.append(0)
+		element_less_than_nine_ind = find_less_element(number_array,9)
+		write_number(0,find_less_element(number_array,9),number_array,0)
+		number_array[element_less_than_nine_ind] += 1
+		current_sd = sum_digits(number_array)
+		if current_sd == need_sum_digits:
+			break
+		delta = need_sum_digits - current_sd
+		if delta < 0 :
+			continue
+		count_nine = int(delta/9)
+		write_number(0,count_nine,number_array,9)
+		number_array[count_nine] = delta%9
+		current_sd = sum_digits(number_array)
 def generate_min_number(sd):
 	count_nine = int(sd/9)
 	result = "9" * count_nine
@@ -86,37 +83,14 @@ def find_koef(number):
     		break
     index_repeat = find_element_in_array(current_koef,koef)
     return koef,index_repeat
-'''
-def get_info_about_modulo(digits_array,coeficients,number,index_repeat):
-    result = 0
-    #print(digits_array)
-    #print(coeficients)
-    #print(number)
-    #print(index_repeat)
-    #print("next")
-    for i in range(0,len(digits_array)):
-	if i < len(coeficients):
-	        result += (digits_array[i]*coeficients[i%len(coeficients)])%number
-	else:
-            #print("i = %d"%i)
-	    #data = i%len(coeficients)+index_repeat
-	    #print("i%len+index = ")
-	    #print(data)
-	    result += (digits_array[i]*coeficients[(i+index_repeat)%len(coeficients)])%number
-    result = result%number
-    return result
-'''
 def find_result(number):
 	coef_for_number,index_repeat = find_koef(number)
 	start_number = generate_min_number(number)
 	digits_int_start_number = reverse(start_number)
 	while True:
-		#if get_info_about_modulo(digits_int_start_number,coef_for_number,number,index_repeat) == 0:
-			#return get_number_from_reversed_array(digits_int_start_number)
 		if fast_division_check(digits_int_start_number,coef_for_number,index_repeat,number) == 0:
 			return get_number_from_reversed_array(digits_int_start_number)
-		find_next_number(digits_int_start_number)
-		#print(start_number)
+		find_next_number(digits_int_start_number,number)
 '''
 while True:
 	N = int(input("Input N: "))
