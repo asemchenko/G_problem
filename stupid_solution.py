@@ -1,7 +1,5 @@
 from sys import argv
 
-N = int(argv[1])
-
 
 def get_start_value(number):
     nine_amount = number // 9
@@ -19,10 +17,12 @@ def get_digit_sum(number):
     return s
 
 
-result = get_start_value(N)
-while get_digit_sum(result) != N:
-    print(result, ' : ', get_digit_sum(result))
-    exit()
-    result += N
+def find_result(n):
+    result = n
+    while get_digit_sum(result) != n:
+        result += n
+    return result
 
-print('[RESULT] = ', result)
+
+for i in range(1, 100):
+    print(i, ':', find_result(i))
