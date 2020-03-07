@@ -1,43 +1,59 @@
 import math
+
+
 def sum_digits(number):
-	number_str = str(number)
-	summa = 0
-	for digit in number_str:
-		summa += int(digit)
-	return summa
+    # number_str = str(number)
+    # summa = 0
+    # for digit in number_str:
+    #     summa += int(digit)
+    # return summa
+    s = 0
+    while number:
+        s += number % 10
+        number //= 10
+    return s
+
+
 def find_result(number):
-	step = 9
-	if number % 3 == 0:
-		step = 3
-	if number % 9 == 0:
-		step = 1
-	k = 1
-	while True:
-		testing_number = k*number
-		if sum_digits(testing_number) == number:
-			return testing_number
-		k+=step
+    step = 9
+    if number % 3 == 0:
+        step = 3
+    if number % 9 == 0:
+        step = 1
+    k = 1
+    while True:
+        testing_number = k * number
+        if sum_digits(testing_number) == number:
+            return testing_number
+        k += step
+
+
 def find_result_more_effective(number):
-    	step = 9
-	if number % 3 == 0:
-		step = 3
-	if number % 9 == 0:
-		step = 1
-	testing_number = generate_min_number(number)
-	testing_number = testing_number - testing_number%number
-	k = int(testing_number/number)
-	while (k%9) != 1:
-    		k-=1
-	testing_number = k*number
-	while True:
-		if sum_digits(testing_number) == number:
-			return testing_number
-		testing_number += number*step
+    step = 9
+    if number % 3 == 0:
+        step = 3
+    if number % 9 == 0:
+        step = 1
+    testing_number = generate_min_number(number)
+    testing_number = testing_number - testing_number % number
+    k = int(testing_number / number)
+    while (k % 9) != 1:
+        k -= 1
+    testing_number = k * number
+    while True:
+        print(testing_number)
+        if sum_digits(testing_number) == number:
+            return testing_number
+        testing_number += number * step
+
+
 def generate_min_number(sd):
-    	count_nine = int(sd/9)
-	search_num = "9" * count_nine
-	search_num = int(str(sd%9)+search_num)
-	return search_num
+    count_nine = int(sd / 9)
+    search_num = "9" * count_nine
+    search_num = int(str(sd % 9) + search_num)
+    return search_num
+
+
 '''
 def find_next_number(number,sd):
     	current_sd = sum_digits(number)
@@ -49,11 +65,16 @@ def find_next_number(number,sd):
 						break
 		number = 
 '''
+
+from sys import argv
+
 while True:
-	N = int(input("Input N: "))
-	result = find_result_more_effective(N)
-	print("Result: %d"%result)
-	print("\n\n")
+    # N = int(input("Input N: "))
+    N = int(argv[1])
+    result = find_result_more_effective(N)
+    # print("Result: %d" % result)
+    # print("\n\n")
+    exit()
 '''
 start = int(input("Input start number: "))
 finish = int(input("Input final number: "))
