@@ -20,7 +20,7 @@ def get_start_value(number):
 
 
 def find(little_exp, big_exp, number, n, should_expand=False):
-    #print('[EXPAND] ' if should_expand else '', number)
+    # print('[EXPAND] ' if should_expand else '', number)
     number_backup = number
     if number % n == 0:
         return number
@@ -39,7 +39,7 @@ def find(little_exp, big_exp, number, n, should_expand=False):
         cur_little -= 1
         # updating number
         number = number - little_exp + big_exp
-        #print('[LOOP] = ', number)
+        # print('[LOOP] = ', number)
         # checking if number match conditions
         res = find(little_exp // 10, big_exp // 10, number, n)
         if res:
@@ -76,5 +76,6 @@ def find_final_result(n):
 
 
 # print find_final_result(int(input()))
-for i in range(1, 76):
-    print(i, ':', find_final_result(i))
+print(find_final_result(1000))
+# for i in range(1, 76):
+#     print(i, ':', find_final_result(i))

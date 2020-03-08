@@ -1,19 +1,35 @@
 #! /usr/bin/python2
+from interruptingcow import timeout
+
+
+def get_exp(number):
+    exp = 1
+    while number % 10 == 0:
+        exp *= 10
+        number //= 10
+    return exp
 
 
 def get_start_value(number):
     nine_amount = number // 9
     i = int(str(number % 9) + ('9' * nine_amount))
+    i *= get_exp(number)
     return i
 
 
 class Number:
-    def __init__(self, number):
+    def __init__(self, number, n):
         self.number = number
         # getting endian_exp
         self.endian_exp = 10  # self.calc_endian_exp()
         # init little_exp
         self.little_exp = 1
+        # save n
+        self.n = n
+        self.n_exp = 1
+        while (n % 10) == 0:
+            n //= 10
+            self.n_exp *= 10
 
     def get_little_digit(self):
         return (self.number // self.little_exp) % 10
@@ -69,7 +85,7 @@ class Number:
         n = (self.number // exp) * exp
         n += exp
         s -= 1
-        e = 1
+        e = self.n_exp
         while s >= 9:
             n += e * 9
             e *= 10
@@ -98,11 +114,37 @@ def find_answer(n):
     start_value = get_start_value(n)
     if start_value % n == 0:
         return start_value
-    i = Number(start_value)
+    i = Number(start_value, n)
     while i.increment() % n != 0:
         pass
     return i.get()
 
 
-for j in range(1, 76):
-    print(j, ':', find_answer(j))
+db = {}
+# print find_answer(int(input()))
+r = [i for i in range(1, 1000)]
+r.remove(165)
+r.remove(185)
+r.remove(275)
+r.remove(297)
+r.remove(308)
+with open('db.txt', 'r') as f:
+    # getting and removing already calculated
+    for l in f.readlines():
+        j = int(l.split(':')[0])
+        r.remove(j)
+total_skipped = 0
+with open('db.txt', 'a') as f:
+    for i in r:
+        try:
+            with timeout(45, exception=RuntimeError):
+                print('Saving for ', i)
+                db[i] = find_answer(i)
+                f.write(str(i) + ':' + str(db[i]) + '\n')
+                if i % 25 == 0:
+                    f.flush()
+        except RuntimeError:
+            print('Timeout! Skipping')
+            total_skipped += 1
+
+print('Total skipped: ', total_skipped)
