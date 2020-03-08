@@ -25,13 +25,11 @@ class Number:
         return int(10 ** (len(str(self.number)) - 1))
 
     def find_littles_free_exp(self):
-        exp = self.endian_exp
-        num = self.number // self.endian_exp
+        exp = self.endian_exp * 10
+        num = self.number // exp
         while num % 10 == 9:
             num //= 10
             exp *= 10
-        # if in digit in last position == 0 => digit at endian exp can be smaller than 9 => exp will be equal to self.endian_exp
-        # return exp * 10 if exp == self.endian_exp else exp
         return exp
 
     def find_biggest_unfree_exp(self):
@@ -46,7 +44,7 @@ class Number:
     def carry_one(self):
         # carrying
         littles_exp = self.find_littles_free_exp()
-        unfree_exp = self.find_biggest_unfree_exp()
+        unfree_exp = littles_exp // 10
         self.number += littles_exp
         # putting remained digits
         remain = self.get_digit(unfree_exp) - 1
@@ -60,13 +58,32 @@ class Number:
                 remain -= diff
             e *= 10
 
+    def sophisticated_increase(self):
+        # finding minimal digit position that can be increased
+        exp = 1
+        s = 0
+        while (self.number // exp) % 10 == 9 or s == 0:
+            s += (self.number // exp) % 10
+            exp *= 10
+        # building minimal number
+        n = (self.number // exp) * exp
+        n += exp
+        s -= 1
+        e = 1
+        while s >= 9:
+            n += e * 9
+            e *= 10
+            s -= 9
+        n += e * s
+        # updating number
+        self.number = n
+
     def increment(self):
         if self.get_endian_digit() < 9 and self.get_little_digit() > 0:
             self.number += self.endian_exp - self.little_exp
             return self.number
-        # elif self.get_endian_digit() < 9 and self.get_little_digit() == 0:
-        #     # TODO think should there be pass?
-        #     pass
+        elif self.get_little_digit() == 0:
+            self.sophisticated_increase()
         else:
             self.carry_one()
         return self.get()
@@ -83,9 +100,9 @@ def find_answer(n):
         return start_value
     i = Number(start_value)
     while i.increment() % n != 0:
-        print('[TEMP] ', n, ';', i.get())
+        pass
     return i.get()
 
 
-for j in range(1, 100):
-    print(j, ' : ', find_answer(j))
+for j in range(1, 76):
+    print(j, ':', find_answer(j))
